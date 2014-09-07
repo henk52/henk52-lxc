@@ -1,0 +1,4 @@
+lxc
+===
+
+LXC base installation
