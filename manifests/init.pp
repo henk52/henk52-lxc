@@ -45,6 +45,9 @@ $LXCPATH = '/usr/share/lxc'
 $LOCALSTATEDIR = '/var'
 $LXCTEMPLATECONFIG = '/usr/share/lxc/config'
 
+$szMirrorListAddress = '10.1.233.3'
+$szRsyncAddress = '10.1.233.3'
+
 
   package { 'lxc':
     ensure => present,

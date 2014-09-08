@@ -581,7 +581,7 @@ Have a beer or a cup of coffee.  This will take a bit (~300MB).
         # Right now, we are using Fedora 20 for the inial bootstrap.
         # We could make this the "current" Fedora rev (F > 15).
 
-        rsync -av mirrors.kernel.org::fedora/releases/20/Fedora/$basearch/os/LiveOS .
+        rsync -av <%= @szRsyncAddress %>::fedora/releases/20/Fedora/$basearch/os/LiveOS .
 
         if [[ 0 == $? ]]
         then
@@ -658,8 +658,8 @@ This will take a couple of minutes.  Patience..."
     # of this LiveOS image we're camped out on.  This is the beginning
     # of the butt ugly hack.  Look close or you may missing it...
 
-    rsync -av mirrors.kernel.org::fedora/releases/20/Fedora/$basearch/os/Packages/r/rpm-[0-9]* \
-        mirrors.kernel.org::fedora/releases/20/Fedora/$basearch/os/Packages/y/yum-[0-9]* .
+    rsync -av <%= @szRsyncAddress %>::fedora/releases/20/Fedora/$basearch/os/Packages/r/rpm-[0-9]* \
+        <%= @szRsyncAddress %>::fedora/releases/20/Fedora/$basearch/os/Packages/y/yum-[0-9]* .
 
     # And here it is...
     # The --nodeps is STUPID but F15 had a bogus dependency on RawHide?!?!
@@ -691,7 +691,7 @@ This will take a couple of minutes.  Patience..."
     echo "Stage 1 creation complete.  Building stage 2 Installation Bootstrap"
 
     mount -o bind ../bootstrap run/install
-    rsync -av mirrors.kernel.org::fedora/releases/20/Fedora/$basearch/os/Packages/f/fedora-release-20* .
+    rsync -av <%= @szRsyncAddress %>::fedora/releases/20/Fedora/$basearch/os/Packages/f/fedora-release-20* .
 
     # The --nodeps is STUPID but F15 had a bogus dependency on RawHide?!?!
     chroot . rpm --root /run/install --nodeps -ivh fedora-release-*
@@ -814,7 +814,7 @@ download_fedora()
     BOOTSTRAP_DIR=
 
     PKG_LIST="yum initscripts passwd rsyslog vim-minimal openssh-server openssh-clients dhclient chkconfig rootfiles policycoreutils fedora-release <%= @szAdditionalPackageListInsideLxc %>"
-    MIRRORLIST_URL="http://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$release&arch=$basearch"
+    MIRRORLIST_URL="http://<%= @szMirrorListAddress %>/mirrorlist?repo=fedora-$release&arch=$basearch"
 
     if [[ ${release} -lt 17 ]]
     then

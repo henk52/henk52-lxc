@@ -62,3 +62,13 @@ Container is not defined
 exiting...
 ^C
 
+
+
+
+==== ====
+Cannot retrieve metalink for repository: fedora/20. Please verify its path and try again
+Failed to download the rootfs, aborting.
+Failed to download 'fedora base'
+failed to install fedora
+lxc_container: container creation template for base failed
+lxc_container: Error creating container base
