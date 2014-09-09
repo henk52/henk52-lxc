@@ -31,6 +31,8 @@ puppet apply --verbose /etc/puppet/modules/lxc/tests/install_base.pp
 
 lxc-create -n base -t fedora
 
+lxc-start --logfile /tmp/lxc.log -l WARN -n base
+
 = TODO =
 
 - Configure the Distribution Manager to be an rsync repo
@@ -75,3 +77,17 @@ Failed to download 'fedora base'
 failed to install fedora
 lxc_container: container creation template for base failed
 lxc_container: Error creating container base
+
+
+==== ====
+lxc-start -n base
+lxc-start: mac address 'DDD create_hwaddr()' conversion failed : Invalid argument
+lxc-start: failed to setup hw address for 'eth0'
+lxc-start: failed to setup netdev
+lxc-start: failed to setup the network for 'base'
+lxc-start: failed to setup the container
+lxc-start: invalid sequence number 1. expected 2
+lxc-start: failed to spawn 'base'
+lxc-start: The container failed to start.
+lxc-start: Additional information can be obtained by setting the --logfile and --log-priority options.
+
