@@ -132,6 +132,7 @@ fi
 
 configure_fedora()
 {
+echo "DDD configure_fedora()"
 
     # disable selinux in fedora
     mkdir -p $rootfs_path/selinux
@@ -342,6 +343,7 @@ EOF
 
 configure_fedora_init()
 {
+echo "DDD configure_fedora_init()"
     sed -i 's|.sbin.start_udev||' ${rootfs_path}/etc/rc.sysinit
     sed -i 's|.sbin.start_udev||' ${rootfs_path}/etc/rc.d/rc.sysinit
     # don't mount devpts, for pete's sake
@@ -366,6 +368,7 @@ EOF
 
 configure_fedora_systemd()
 {
+echo "DDD configure_fedora_systemd()"
     rm -f ${rootfs_path}/etc/systemd/system/default.target
     touch ${rootfs_path}/etc/fstab
     chroot ${rootfs_path} ln -s /dev/null /etc/systemd/system/udev.service
@@ -456,6 +459,7 @@ BOOTSTRAP_CHROOT=
 
 fedora_get_bootstrap()
 {
+echo "DDD fedora_get_bootstrap()"
     echo "Bootstrap Environment testing..."
 
     WHITE_LISTED=1
@@ -757,12 +761,15 @@ normally scheduled template creation.
 
 fedora_bootstrap_mounts()
 {
+echo "DDD fedora_bootstrap_mounts()"
+echo "DDD   BOOTSTRAP = ${BOOTSTRAP}"
     if [[ ${BOOTSTRAP} -ne 1 ]]
     then
         return 0
     fi
 
     BOOTSTRAP_CHROOT="chroot ${BOOTSTRAP_DIR} "
+echo "XXX Am I here???"
 
     echo "Mounting Bootstrap mount points"
 
@@ -777,6 +784,7 @@ fedora_bootstrap_mounts()
 
 fedora_bootstrap_umounts()
 {
+echo "DDD fedora_bootstrap_umounts()"
     if [[ ${BOOTSTRAP} -ne 1 ]]
     then
         return 0
@@ -793,6 +801,7 @@ fedora_bootstrap_umounts()
 
 download_fedora()
 {
+echo "DDD download_fedora()"
 
     # check the mini fedora was not already downloaded
     INSTALL_ROOT=$cache/partial
@@ -887,6 +896,7 @@ download_fedora()
 
     fedora_bootstrap_mounts
 
+echo "DDD executing: ${BOOTSTRAP_CHROOT}rpm --root ${BOOTSTRAP_INSTALL_ROOT} --initdb"
     ${BOOTSTRAP_CHROOT}rpm --root ${BOOTSTRAP_INSTALL_ROOT} --initdb
     # The --nodeps is STUPID but F15 had a bogus dependency on RawHide?!?!
     ${BOOTSTRAP_CHROOT}rpm --root ${BOOTSTRAP_INSTALL_ROOT} --nodeps -ivh ${BOOTSTRAP_INSTALL_ROOT}/${RELEASE_RPM}
@@ -894,6 +904,13 @@ download_fedora()
     # yum will take $basearch from host, so force the arch we want
     sed -i "s|\$basearch|$basearch|" ${BOOTSTRAP_DIR}/${BOOTSTRAP_INSTALL_ROOT}/etc/yum.repos.d/*
 
+# TODO C Find a way to make this optional.
+echo "III Removing the default .repo configurations."
+rm ${BOOTSTRAP_INSTALL_ROOT}/etc/yum.repos.d/*.repo
+echo "III Copy the Global Zone repo config files."
+cp /etc/yum.repos.d/*.repo ${BOOTSTRAP_INSTALL_ROOT}/etc/yum.repos.d
+
+echo "DDD executing: ${BOOTSTRAP_CHROOT}yum --installroot ${BOOTSTRAP_INSTALL_ROOT} -y --nogpgcheck install ${PKG_LIST}"
     ${BOOTSTRAP_CHROOT}yum --installroot ${BOOTSTRAP_INSTALL_ROOT} -y --nogpgcheck install ${PKG_LIST}
 
     RC=$?
@@ -969,6 +986,7 @@ download_fedora()
 
 copy_fedora()
 {
+echo "DDD copy_fedora()"
 
     # make a local copy of the minifedora
     echo -n "Copying rootfs to $rootfs_path ..."
@@ -982,6 +1000,7 @@ copy_fedora()
 
 update_fedora()
 {
+echo "DDD update_fedora()"
     mount -o bind /dev ${cache}/rootfs/dev
     mount -t proc proc ${cache}/rootfs/proc
     # Always make sure /etc/resolv.conf is up to date in the target!
@@ -993,6 +1012,7 @@ update_fedora()
 
 install_fedora()
 {
+echo "DDD install_fedora()"
     mkdir -p <%= @LOCALSTATEDIR %>/lock/subsys/
     (
         flock -x 9
@@ -1035,11 +1055,13 @@ install_fedora()
 # 5 random bytes...
 create_hwaddr()
 {
+echo "DDD create_hwaddr()"
     openssl rand -hex 5 | sed -e 's/\(..\)/:\1/g; s/^/fe/'
 }
 
 copy_configuration()
 {
+echo "DDD copy_configuration()"
     mkdir -p $config_path
 
     grep -q "^lxc.rootfs" $config_path/config 2>/dev/null || echo "
@@ -1118,6 +1140,7 @@ EOF
 
 clean()
 {
+echo "DDD clean()"
 
     if [ ! -e $cache ]; then
         exit 0
@@ -1139,6 +1162,7 @@ clean()
 
 usage()
 {
+echo "DDD usage()"
     cat <<EOF
 usage:
     $1 -n|--name=<container_name>
@@ -1331,6 +1355,7 @@ cache=$cache_base/$release
 
 revert()
 {
+echo "DDD revert()"
     echo "Interrupted, so cleaning up"
     lxc-destroy -n $name
     # maybe was interrupted before copy config

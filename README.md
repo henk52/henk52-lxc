@@ -23,6 +23,9 @@ Support
 
 Please log tickets and issues at our [Projects site](http://projects.example.com)
 
+= Installation =
+
+puppet apply --verbose /etc/puppet/modules/lxc/tests/install_base.pp
 
 = Usage =
 
