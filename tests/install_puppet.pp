@@ -1,0 +1,3 @@
+class { 'lxc':
+ szAdditionalPackageListInsideLxc => 'puppet', 
+}

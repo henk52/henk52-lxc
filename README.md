@@ -25,6 +25,10 @@ Please log tickets and issues at our [Projects site](http://projects.example.com
 
 = Installation =
 
+# This will read the PKG_LIST from the defaults.yaml.
+puppet apply --verbose /etc/puppet/modules/lxc/tests/install_base.pp
+
+# This has the list in puppet manifest.
 puppet apply --verbose /etc/puppet/modules/lxc/tests/install_base.pp
 
 = Usage =
@@ -32,6 +36,12 @@ puppet apply --verbose /etc/puppet/modules/lxc/tests/install_base.pp
 lxc-create -n base -t fedora
 
 lxc-start --logfile /tmp/lxc.log -l WARN -n base
+
+
+lxc-destroy -n base
+
+Remove the cache
+  rm -rf /var/cache/lxc/fedora/x86_64
 
 = TODO =
 
