@@ -37,6 +37,8 @@ lxc-create -n base -t fedora
 
 lxc-start --logfile /tmp/lxc.log -l WARN -n base
 
+  /var/lib/lxc/base/rootfs
+
 
 lxc-destroy -n base
 

@@ -908,7 +908,7 @@ echo "DDD executing: ${BOOTSTRAP_CHROOT}rpm --root ${BOOTSTRAP_INSTALL_ROOT} --i
 echo "III Removing the default .repo configurations."
 rm ${BOOTSTRAP_INSTALL_ROOT}/etc/yum.repos.d/*.repo
 echo "III Copy the Global Zone repo config files."
-cp /etc/yum.repos.d/*.repo ${BOOTSTRAP_INSTALL_ROOT}/etc/yum.repos.d
+cp /vagrant/files/repos.d/*.repo ${BOOTSTRAP_INSTALL_ROOT}/etc/yum.repos.d
 
 echo "DDD executing: ${BOOTSTRAP_CHROOT}yum --installroot ${BOOTSTRAP_INSTALL_ROOT} -y --nogpgcheck install ${PKG_LIST}"
     ${BOOTSTRAP_CHROOT}yum --installroot ${BOOTSTRAP_INSTALL_ROOT} -y --nogpgcheck install ${PKG_LIST}
