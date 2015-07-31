@@ -23,15 +23,15 @@ Support
 
 Please log tickets and issues at our [Projects site](http://projects.example.com)
 
-= Installation =
+# Installation 
 
-# This will read the PKG_LIST from the defaults.yaml.
+* This will read the PKG_LIST from the defaults.yaml.
 puppet apply --verbose /etc/puppet/modules/lxc/tests/install_base.pp
 
-# This has the list in puppet manifest.
+* This has the list in puppet manifest.
 puppet apply --verbose /etc/puppet/modules/lxc/tests/install_base.pp
 
-= Usage =
+# Usage
 
 lxc-create -n base -t fedora
 
@@ -45,21 +45,21 @@ lxc-destroy -n base
 Remove the cache
   rm -rf /var/cache/lxc/fedora/x86_64
 
-= TODO =
+# TODO 
 
-- Configure the Distribution Manager to be an rsync repo
-- Support: rsync -av mirrors.kernel.org::fedora/releases/20/Fedora/$basearch/os/LiveOS .
+* Configure the Distribution Manager to be an rsync repo
+* Support: rsync -av mirrors.kernel.org::fedora/releases/20/Fedora/$basearch/os/LiveOS .
   rsync -av mirrors.kernel.org::fedora/releases/20/Fedora/x86_64/os/LiveOS .
     the 'fedora/' would be: /home/ks/repo/linux/
 
-= Troubleshooting =
+# Troubleshooting
 
-==== ====
+#### ERROR: The remote path must start with a module name not a /
 rsync -av 10.1.233.3::/home/ks/repo/linux/releases/20/Fedora/x86_64/os/LiveOS .
 ERROR: The remote path must start with a module name not a /
 rsync error: error starting client-server protocol (code 5) at main.c(1635) [Receiver=3.1.0]
 
-==== ====
+#### curl: (6) Could not resolve host: mirrors.fedoraproject.org
 lxc-create -n base -t fedora
 Host CPE ID from /etc/os-release: cpe:/o:fedoraproject:fedora:20
 Checking cache download in /var/cache/lxc/fedora/x86_64/20/rootfs ... 
@@ -82,7 +82,7 @@ exiting...
 
 
 
-==== ====
+#### Cannot retrieve metalink for repository: fedora/20. Please verify its path and try again
 Cannot retrieve metalink for repository: fedora/20. Please verify its path and try again
 Failed to download the rootfs, aborting.
 Failed to download 'fedora base'
@@ -91,7 +91,7 @@ lxc_container: container creation template for base failed
 lxc_container: Error creating container base
 
 
-==== ====
+#### lxc-start: mac address 'DDD create_hwaddr()' conversion failed : Invalid argument
 lxc-start -n base
 lxc-start: mac address 'DDD create_hwaddr()' conversion failed : Invalid argument
 lxc-start: failed to setup hw address for 'eth0'
