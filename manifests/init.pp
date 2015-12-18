@@ -45,8 +45,8 @@ $LXCPATH = '/usr/share/lxc'
 $LOCALSTATEDIR = '/var'
 $LXCTEMPLATECONFIG = '/usr/share/lxc/config'
 
-$szMirrorListAddress = '10.1.233.3'
-$szRsyncAddress = '10.1.233.3'
+$szMirrorListAddress = hiera('MirrorListAddress', 'dm')
+$szRsyncAddress = hiera('RsyncAddress', 'dm')
 
 
   package { 'lxc':
