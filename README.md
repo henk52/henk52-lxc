@@ -5,6 +5,11 @@ LXC base installation
 
 This is the lxc module.
 
+sudo dnf install puppetlabs-stdlib
+sudo ln -s /usr/share/puppet/modules/stdlib /etc/puppet/modules/stdlib
+sudo puppet apply just_lxc.pp
+
+
 License
 -------
 
